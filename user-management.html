@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Variables de Raíz */
+        :root {
+            --primary-color: #0052cc;
+            --secondary-color: #ff5722;
+            --background-color: #f5f7fa;
+            --sidebar-color: #fff;
+            --text-color: #333;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* Estilos Globales */
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            display: flex;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Estilos de la Barra Lateral */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-color);
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100%;
+        }
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .sidebar nav a {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+        .sidebar nav a:hover {
+            background-color: var(--background-color);
+        }
+        .sidebar nav a.active {
+            background-color: var(--background-color);
+            font-weight: 600;
+        }
+
+        /* Estilos del Contenido Principal */
+        .main-content {
+            margin-left: 270px;
+            padding: 40px;
+            flex-grow: 1;
+        }
+        .main-content h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* Estilos de la Lista de Usuarios */
+        .add-user-button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        .add-user-button:hover {
+            background-color: #e64a19;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            color: #555;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f5f7fa;
+        }
+        .action-buttons button {
+            padding: 6px 12px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .view-button {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        .edit-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .action-buttons button:hover {
+            opacity: 0.9;
+        }
+
+        /* Estilos del Formulario */
+        .user-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+        }
+        .user-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        .user-form input, .user-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .user-form .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .user-form .form-buttons button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .save-button {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        .cancel-button, .back-button {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .create-button {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+        .save-button:hover {
+            background-color: #003d99;
+        }
+        .cancel-button:hover, .back-button:hover {
+            background-color: #5a6268;
+        }
+        .create-button:hover {
+            background-color: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra Lateral -->
+    <div class="sidebar">
+        <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
+        <nav>
+            <a href="dashboard.html">Panel de Control</a>
+            <a href="manage-data.html">Subir y gestionar datos</a>
+            <a href="#"><b>Gestión de Usuarios</b></a>
+            <a href="landing.html">Cerrar Sesión</a>
+        </nav>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <!-- Sección de Lista de Usuarios -->
+        <div id="userList">
+            <h2>Gestión de Usuarios</h2>
+            <button class="add-user-button" onclick="showSection('createUser')">Agregar Nuevo Usuario</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID de Usuario</th>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Rol</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Fila de Ejemplo -->
+                    <tr>
+                        <td>1</td>
+                        <td>Juan Pérez</td>
+                        <td>juan.perez@example.com</td>
+                        <td>Administrador</td>
+                        <td class="action-buttons" style="text-align: center;">
+                            <button class="view-button" onclick="viewUser('1')">Ver</button>
+                            <button class="edit-button" onclick="editUser('1')">Editar</button>
+                            <button class="delete-button" onclick="deleteUser('1')">Eliminar</button>
+                        </td>
+                    </tr>
+                    <!-- Repite filas similares para otros usuarios -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Detalle/Edición de Usuario -->
+        <div id="userDetail" class="hidden">
+            <h2 id="userDetailTitle">Detalle de Usuario</h2>
+            <div class="user-form">
+                <form>
+                    <label for="user-id">ID de Usuario</label>
+                    <input type="text" id="user-id" disabled>
+                    <label for="full-name">Nombre Completo</label>
+                    <input type="text" id="full-name">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email">
+                    <label for="role">Rol</label>
+                    <select id="role">
+                        <option value="admin">Administrador</option>
+                        <option value="user">Usuario</option>
+                    </select>
+                    <div class="form-buttons">
+                        <button type="button" class="back-button" onclick="showSection('userList')">Volver</button>
+                        <button type="submit" class="save-button">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sección de Crear Usuario -->
+        <div id="createUser" class="hidden">
+            <h2>Crear Nuevo Usuario</h2>
+            <div class="user-form">
+                <form>
+                    <label for="create-full-name">Nombre Completo</label>
+                    <input type="text" id="create-full-name" placeholder="Ingresa el nombre completo">
+                    <label for="create-email">Correo Electrónico</label>
+                    <input type="email" id="create-email" placeholder="Ingresa el correo electrónico">
+                    <label for="create-password">Contraseña</label>
+                    <input type="password" id="create-password" placeholder="Crea una contraseña">
+                    <label for="create-role">Rol</label>
+                    <select id="create-role">
+                        <option value="admin">Administrador</option>
+                        <option value="user" selected>Usuario</option>
+                    </select>
+                    <div class="form-buttons">
+                        <button type="button" class="cancel-button" onclick="showSection('userList')">Cancelar</button>
+                        <button type="submit" class="create-button">Crear Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para manejar la navegación y acciones -->
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.getElementById('userList').classList.add('hidden');
+            document.getElementById('userDetail').classList.add('hidden');
+            document.getElementById('createUser').classList.add('hidden');
+
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function viewUser(userId) {
+            // Lógica para cargar los detalles del usuario
+            // Para demostración, usaremos datos estáticos
+            document.getElementById('userDetailTitle').textContent = 'Ver Usuario';
+            document.getElementById('user-id').value = userId;
+            document.getElementById('full-name').value = 'Juan Pérez';
+            document.getElementById('email').value = 'juan.perez@example.com';
+            document.getElementById('role').value = 'admin';
+
+            // Deshabilitar campos para visualización
+            document.getElementById('full-name').disabled = true;
+            document.getElementById('email').disabled = true;
+            document.getElementById('role').disabled = true;
+
+            // Ocultar botón de guardar
+            document.querySelector('.save-button').style.display = 'none';
+
+            showSection('userDetail');
+        }
+
+        function editUser(userId) {
+            // Lógica para cargar los detalles del usuario
+            // Para demostración, usaremos datos estáticos
+            document.getElementById('userDetailTitle').textContent = 'Editar Usuario';
+            document.getElementById('user-id').value = userId;
+            document.getElementById('full-name').value = 'Juan Pérez';
+            document.getElementById('email').value = 'juan.perez@example.com';
+            document.getElementById('role').value = 'admin';
+
+            // Habilitar campos para edición
+            document.getElementById('full-name').disabled = false;
+            document.getElementById('email').disabled = false;
+            document.getElementById('role').disabled = false;
+
+            // Mostrar botón de guardar
+            document.querySelector('.save-button').style.display = 'inline-block';
+
+            showSection('userDetail');
+        }
+
+        function deleteUser(userId) {
+            // Diálogo de confirmación
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                // Lógica para eliminar el usuario
+                alert('El usuario ' + userId + ' ha sido eliminado.');
+                // Actualizar la lista de usuarios o eliminar el usuario de la tabla
+            }
+        }
+
+        // Inicializar la página mostrando la lista de usuarios
+        showSection('userList');
+    </script>
+</body>
+</html>

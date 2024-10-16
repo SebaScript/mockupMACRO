@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es"></html>
 <head>
     <meta charset="UTF-8">
-    <title>Logistics AI - Dashboard</title>
-    <!-- Google Fonts -->
+    <title>LogiAI</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Root Variables */
         :root {
             --primary-color: #113271;
             --secondary-color: #ff5722;
@@ -16,7 +14,6 @@
             --font-family: 'Poppins', sans-serif;
         }
 
-        /* Global Styles */
         body {
             margin: 0;
             font-family: var(--font-family);
@@ -91,7 +88,6 @@
         .predict-section .predict-button:hover {
             background-color: #e64a19;
         }
-        /* Upload Section */
         .upload-section {
             margin-bottom: 40px;
         }
@@ -126,7 +122,6 @@
             position: relative;
         }
         .chart-card::after {
-            content: 'Chart Placeholder';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -140,28 +135,23 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="#">Dashboard</a>
-            <a href="#">Predict Demand</a>
-            <a href="#">Upload Data</a>
-            <a href="#">Settings</a>
-            <a href="#">Logout</a>
+            <a href="#"><b>Panel de Control</b></a>
+            <a href="manage-data.html">Subir y gestionar Datos</a>
+            <a href="user-management.html">Gestionar Usuarios</a>
+            <a href="landing.html">Cerrar Sesión</a>
         </nav>
     </div>
     <div class="main-content">
-        <h2>Welcome Back, [User Name]</h2>
+        <h2>Bienvenido a LogiAI, [Nombre de Usuario]</h2>
         <div class="predict-section">
             <input type="date">
-            <button class="predict-button">Predict Demand</button>
-        </div>
-        <div class="upload-section">
-            <label for="file-upload">Upload Data File</label>
-            <input type="file" id="file-upload">
+            <button class="predict-button">Predecir Demanda</button>
         </div>
         <div class="charts">
-            <div class="chart-card"></div>
-            <div class="chart-card"></div>
-            <div class="chart-card"></div>
-            <div class="chart-card"></div>
+            <div class="chart-card"><img src="chart1.png" alt=""></div>
+            <div class="chart-card"><img src="chart2.png" alt=""></div>
+            <div class="chart-card"><img src="chart3.png" alt=""></div>
+            <div class="chart-card"><img src="chart4.png" alt=""></div>
         </div>
     </div>
 </body>
